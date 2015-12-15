@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Cordova whitelist example</title>
+    <meta http-equiv="Content-Security-Policy" 
+             content="default-src *; 
+                      style-src * 'self' 'unsafe-inline' 'unsafe-eval'; 
+                      script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+
+    <meta name="viewport" content="width=device-width">
+    <style>
+    body {margin:0px;font-size:0.5em;background-color:hsl(0,100%,50%);
+    background-image:url("http://codesnippets.altervista.org/examples/phonegap/images/cordova-whitelist-example.png");
+    background-repeat:no-repeat;
+    background-position:bottom right;
+    background-attachment: fixed;}
+    @media screen and (max-width:640px) { #mapBasic {height:250px;} }
+    @media screen and (max-width:320px) { #mapBasic {height:200px;} }
+    </style>
+    <!-- This needs to go afterwards to overwrite the 'style' just above, otherwise it is red background and a extra small font -->
+    <link rel='stylesheet' type='text/css' href='http://codesnippets.altervista.org/examples/phonegap/images/cordova-whitelist-example.css' />
+    <script type="text/javascript">
+    //
+    function onLoad() {
+        //alert("body loaded.");
+        console.info("body loaded.");
+        //onDeviceReady();
+    }
+    </script>
+</head>
+<body onload="onLoad()">
+<h3>Cordova whitelist example</h3>
+<div id=networktype>No network connection</div>
+<div id=networkstatus>Offline</div>
+<button id="button-launch-self" >_self</button>
+<button id="button-launch-system" >_system</button>
+<button id="button-launch-blank" >_blank</button>
+<div id=content style="margin:1em;">Waiting for Device Ready</div>
+<pre id=info>pre</pre>
+</body>
+<script type="text/javascript" charset="utf-8" src="zepto-1.1.6.js"></script>
+<script type="text/javascript" charset="utf-8" src="fastclick.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8" >
+
+    // Wait for PhoneGap to load
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // Watch network activity
+    document.addEventListener("offline", onOffline, false);
+    document.addEventListener("online", onOnline, false);
+    //
+    function onOffline() {
+        $('#networkstatus').html("Offline");
+        checkConnection();
+    }
+    function onOnline() {
+        $('#networkstatus').html("Online");
+        checkConnection();
+    }
+    function checkConnection() {
+        var networkState = navigator.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.CELL]     = 'Cell generic connection';
+        states[Connection.NONE]     = 'No network connection';
+
+        $('#networktype').html(states[networkState]);
+    }
+    //
+    function onDeviceReady() {
+        $('#content').html("Device Ready.");
+        // https://www.npmjs.com/package/cordova-plugin-inappbrowser
+        // Replace standard webview library with the 'InAppBrowser'
+        window.open = cordova.InAppBrowser.open;
+        //
+
+        $('#button-launch-self').click(function() {
+            console.info("#button-launch-external");
+            window.open("http://cordova.apache.org/blog/","_self");          
+        });
+
+        $('#button-launch-system').click(function() {
+            console.info("#button-launch-external");
+            window.open("http://cordova.apache.org/blog/","_system");          
+        });
+
+        $('#button-launch-blank').click(function() {
+            console.info("#button-launch-external");
+            window.open("http://cordova.apache.org/blog/","_blank");          
+        });
+    }
+</script>
+</html>
