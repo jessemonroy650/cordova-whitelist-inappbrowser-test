@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Cordova whitelist example</title>
+    <title>Cordova whitelist inappbrowser test</title>
     <meta http-equiv="Content-Security-Policy" 
              content="default-src *; 
                       style-src * 'self' 'unsafe-inline' 'unsafe-eval'; 
@@ -15,6 +15,7 @@
     background-repeat:no-repeat;
     background-position:bottom right;
     background-attachment: fixed;}
+    button {margin:0.5em;}
     @media screen and (max-width:640px) { #mapBasic {height:250px;} }
     @media screen and (max-width:320px) { #mapBasic {height:200px;} }
     </style>
@@ -30,12 +31,12 @@
     </script>
 </head>
 <body onload="onLoad()">
-<h3>Cordova whitelist example</h3>
+<h3>Cordova whitelist inappbrowser test</h3>
 <div id=networktype>No network connection</div>
 <div id=networkstatus>Offline</div>
-<button id="button-launch-self" >_self</button>
-<button id="button-launch-system" >_system</button>
-<button id="button-launch-blank" >_blank</button>
+<button id="button-launch-self" >_self</button><p>
+<button id="button-launch-system" >_system</button><p>
+<button id="button-launch-blank" >_blank</button><p>
 <div id=content style="margin:1em;">Waiting for Device Ready</div>
 <pre id=info>pre</pre>
 </body>
